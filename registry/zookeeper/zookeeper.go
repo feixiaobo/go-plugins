@@ -283,7 +283,7 @@ func NewRegistry(opts ...registry.Option) registry.Registry {
 		options.Timeout = 5
 	}
 
-	if options.ZkPath == "" {
+	if options.ZkPath != "" {
 		prefix = options.ZkPath
 	}
 
