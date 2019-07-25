@@ -283,6 +283,10 @@ func NewRegistry(opts ...registry.Option) registry.Registry {
 		options.Timeout = 5
 	}
 
+	if options.ZkPath == "" {
+		prefix = options.ZkPath
+	}
+
 	var cAddrs []string
 	for _, addr := range options.Addrs {
 		if len(addr) == 0 {
