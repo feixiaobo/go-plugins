@@ -93,6 +93,7 @@ func serviceToInstance(service *registry.Service) (*fargo.Instance, error) {
 		SecurePort:        443,
 		SecurePortEnabled: true,
 		InstanceId:        node.Id,
+		HealthCheckUrl:    "http://172.17.27.203:9103/health",
 		UniqueID: func(i fargo.Instance) string {
 			return fmt.Sprintf("%s:%s", node.Address, node.Id)
 		},
