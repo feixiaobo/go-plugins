@@ -91,7 +91,7 @@ func serviceToInstance(service *registry.Service) (*fargo.Instance, error) {
 		Status:            fargo.UP,
 		PortEnabled:       true,
 		SecurePort:        443,
-		SecurePortEnabled: true,
+		SecurePortEnabled: false,
 		InstanceId:        node.Id,
 		HealthCheckUrl:    "http://172.17.27.203:9103/health",
 		CountryId:         1,
