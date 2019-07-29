@@ -325,9 +325,6 @@ func onlyRegister(h *httpServer) error {
 			t = time.NewTicker(opts.RegisterInterval)
 		}
 
-		// return error chan
-		var ch chan error
-
 	Loop:
 		for {
 			select {
@@ -337,7 +334,7 @@ func onlyRegister(h *httpServer) error {
 					log.Log("Server register error: ", err)
 				}
 			// wait for exit
-			case ch = <-h.exit:
+			case <-h.exit:
 				break Loop
 			}
 		}
