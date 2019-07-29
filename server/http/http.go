@@ -300,6 +300,56 @@ func (h *httpServer) Start() error {
 	return nil
 }
 
+func (h *httpServer) OnlyRegister() error {
+	h.Lock()
+	opts := h.opts
+	h.Unlock()
+
+	log.Logf("start register server and open broker %s", opts.Address)
+	if err := opts.Broker.Connect(); err != nil {
+		return err
+	}
+
+	// register
+	if err := h.Register(); err != nil {
+		return err
+	}
+
+	go func() {
+		t := new(time.Ticker)
+
+		// only process if it exists
+		if opts.RegisterInterval > time.Duration(0) {
+			// new ticker
+			t = time.NewTicker(opts.RegisterInterval)
+		}
+
+		// return error chan
+		var ch chan error
+
+	Loop:
+		for {
+			select {
+			// register self on interval
+			case <-t.C:
+				if err := h.Register(); err != nil {
+					log.Log("Server register error: ", err)
+				}
+			// wait for exit
+			case ch = <-h.exit:
+				break Loop
+			}
+		}
+
+		// deregister
+		h.Deregister()
+
+		opts.Broker.Disconnect()
+	}()
+
+	return nil
+}
+
 func (h *httpServer) Stop() error {
 	ch := make(chan error)
 	h.exit <- ch
