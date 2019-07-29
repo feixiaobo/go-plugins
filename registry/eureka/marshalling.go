@@ -78,12 +78,12 @@ func serviceToInstance(service *registry.Service) (*fargo.Instance, error) {
 	}
 
 	node := service.Nodes[0]
-	_, pt, _ := net.SplitHostPort(node.Address)
+	host, pt, _ := net.SplitHostPort(node.Address)
 	port, _ := strconv.Atoi(pt)
 
 	instance := &fargo.Instance{
 		App:               service.Name,
-		HostName:          node.Address,
+		HostName:          host,
 		IPAddr:            node.Address,
 		VipAddress:        service.Name,
 		SecureVipAddress:  service.Name,
