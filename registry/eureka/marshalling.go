@@ -84,7 +84,7 @@ func serviceToInstance(service *registry.Service) (*fargo.Instance, error) {
 	instance := &fargo.Instance{
 		App:               service.Name,
 		HostName:          host,
-		IPAddr:            node.Address,
+		IPAddr:            host,
 		VipAddress:        service.Name,
 		SecureVipAddress:  service.Name,
 		Port:              port,
@@ -94,6 +94,7 @@ func serviceToInstance(service *registry.Service) (*fargo.Instance, error) {
 		SecurePortEnabled: true,
 		InstanceId:        node.Id,
 		HealthCheckUrl:    "http://172.17.27.203:9103/health",
+		CountryId:         1,
 		UniqueID: func(i fargo.Instance) string {
 			return fmt.Sprintf("%s:%s", node.Address, node.Id)
 		},
