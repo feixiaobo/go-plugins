@@ -4,7 +4,6 @@ package http
 import (
 	"errors"
 	"fmt"
-	"net"
 	"net/http"
 	"sort"
 	"sync"
@@ -231,76 +230,78 @@ func (h *httpServer) Deregister() error {
 }
 
 func (h *httpServer) Start() error {
-	h.Lock()
-	opts := h.opts
-	hd := h.hd
-	h.Unlock()
+	return onlyRegister(h)
 
-	ln, err := net.Listen("tcp", opts.Address)
-	if err != nil {
-		return err
-	}
-
-	log.Logf("Listening on %s", ln.Addr().String())
-
-	h.Lock()
-	h.opts.Address = ln.Addr().String()
-	h.Unlock()
-
-	handler, ok := hd.Handler().(http.Handler)
-	if !ok {
-		return errors.New("Server required http.Handler")
-	}
-
-	if err = opts.Broker.Connect(); err != nil {
-		return err
-	}
-
-	// register
-	if err = h.Register(); err != nil {
-		return err
-	}
-
-	go http.Serve(ln, handler)
-
-	go func() {
-		t := new(time.Ticker)
-
-		// only process if it exists
-		if opts.RegisterInterval > time.Duration(0) {
-			// new ticker
-			t = time.NewTicker(opts.RegisterInterval)
-		}
-
-		// return error chan
-		var ch chan error
-
-	Loop:
-		for {
-			select {
-			// register self on interval
-			case <-t.C:
-				if err := h.Register(); err != nil {
-					log.Log("Server register error: ", err)
-				}
-			// wait for exit
-			case ch = <-h.exit:
-				break Loop
-			}
-		}
-
-		ch <- ln.Close()
-
-		// deregister
-		h.Deregister()
-
-		opts.Broker.Disconnect()
-	}()
-
-	return nil
+	//h.Lock()
+	//opts := h.opts
+	//hd := h.hd
+	//h.Unlock()
+	//
+	//ln, err := net.Listen("tcp", opts.Address)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//log.Logf("Listening on %s", ln.Addr().String())
+	//
+	//h.Lock()
+	//h.opts.Address = ln.Addr().String()
+	//h.Unlock()
+	//
+	//handler, ok := hd.Handler().(http.Handler)
+	//if !ok {
+	//	return errors.New("Server required http.Handler")
+	//}
+	//
+	//if err = opts.Broker.Connect(); err != nil {
+	//	return err
+	//}
+	//
+	//// register
+	//if err = h.Register(); err != nil {
+	//	return err
+	//}
+	//
+	//go http.Serve(ln, handler)
+	//
+	//go func() {
+	//	t := new(time.Ticker)
+	//
+	//	// only process if it exists
+	//	if opts.RegisterInterval > time.Duration(0) {
+	//		// new ticker
+	//		t = time.NewTicker(opts.RegisterInterval)
+	//	}
+	//
+	//	// return error chan
+	//	var ch chan error
+	//
+	//Loop:
+	//	for {
+	//		select {
+	//		// register self on interval
+	//		case <-t.C:
+	//			if err := h.Register(); err != nil {
+	//				log.Log("Server register error: ", err)
+	//			}
+	//		// wait for exit
+	//		case ch = <-h.exit:
+	//			break Loop
+	//		}
+	//	}
+	//
+	//	ch <- ln.Close()
+	//
+	//	// deregister
+	//	h.Deregister()
+	//
+	//	opts.Broker.Disconnect()
+	//}()
+	//
+	//return nil
 }
 
-func (h *httpServer) OnlyRegister() error {
+func onlyRegister(h *httpServer) error {
 	h.Lock()
 	opts := h.opts
 	h.Unlock()
