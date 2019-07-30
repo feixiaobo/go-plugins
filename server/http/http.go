@@ -137,11 +137,14 @@ func (h *httpServer) Subscribe(sb server.Subscriber) error {
 func (h *httpServer) Register() error {
 	h.Lock()
 	opts := h.opts
-	//eps := h.hd.Endpoints()
+	eps := []*registry.Endpoint{}
+	if h.hd != nil && len(h.hd.Endpoints()) > 0 {
+		eps = h.hd.Endpoints()
+	}
 	h.Unlock()
 
 	service := serviceDef(opts)
-	service.Endpoints = []*registry.Endpoint{}
+	service.Endpoints = eps
 
 	h.Lock()
 	var subscriberList []*httpSubscriber
