@@ -315,8 +315,8 @@ func onlyRegister(h *httpServer) error {
 	}
 
 	// register
-	if err := h.Register(); err != nil {
-		return err
+	if err := h.Register(); err != nil { //启动时如果注册中心宕机继续心跳重试
+		log.Logf("register server error", err)
 	}
 
 	go func() {
