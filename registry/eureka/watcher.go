@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/hudl/fargo"
+	"github.com/feixiaobo/fargo"
 	"github.com/micro/go-micro/registry"
 )
 

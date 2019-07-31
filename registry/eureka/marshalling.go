@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hudl/fargo"
+	"github.com/feixiaobo/fargo"
 	"github.com/micro/go-micro/registry"
 )
 

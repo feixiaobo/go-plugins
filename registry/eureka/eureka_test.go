@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/hudl/fargo"
+	"github.com/feixiaobo/fargo"
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-plugins/registry/eureka/mock"
 )

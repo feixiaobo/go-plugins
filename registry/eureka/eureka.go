@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/hudl/fargo"
+	"github.com/feixiaobo/fargo"
 	"github.com/micro/go-micro/config/cmd"
 	"github.com/micro/go-micro/registry"
 	"github.com/op/go-logging"

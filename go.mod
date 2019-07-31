@@ -25,6 +25,7 @@ require (
 	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f // indirect
 	github.com/eapache/go-resiliency v1.2.0 // indirect
 	github.com/eclipse/paho.mqtt.golang v1.2.0
+	github.com/feixiaobo/fargo v1.3.4
 	github.com/franela/goblin v0.0.0-20181003173013-ead4ad1d2727 // indirect
 	github.com/franela/goreq v0.0.0-20171204163338-bcd34c9993f8 // indirect
 	github.com/garyburd/redigo v1.6.0 // indirect
@@ -47,7 +48,6 @@ require (
 	github.com/hashicorp/go-hclog v0.9.2 // indirect
 	github.com/hashicorp/vault v1.1.3
 	github.com/huandu/xstrings v1.2.0 // indirect
-	github.com/hudl/fargo v1.2.0
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/juju/ratelimit v1.0.1
 	github.com/micro/cli v0.2.0

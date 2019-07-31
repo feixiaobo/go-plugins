@@ -4,7 +4,7 @@ package mock
 import (
 	"sync"
 
-	"github.com/hudl/fargo"
+	"github.com/feixiaobo/fargo"
 )
 
 type FargoConnection struct {
